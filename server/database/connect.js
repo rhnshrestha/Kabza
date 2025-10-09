@@ -8,6 +8,7 @@ const sequelize = new Sequelize("table_bs", "root", "!rhn@sql25", {
 // Corrected import path for Admins model
 const Admins = require('../model/admins.model')(sequelize, DataTypes);
 const Tables = require('../model/tables.model')(sequelize, DataTypes);
+const BookingStatus = require('../model/booking_status.model')(sequelize, DataTypes);
 
 sequelize.authenticate()
   .then(() => {
@@ -21,4 +22,4 @@ sequelize.authenticate()
     console.log("error aayo" + err);
   });
 
-module.exports = { sequelize, Admins, Tables };
+module.exports = { sequelize, Admins, Tables, BookingStatus };
