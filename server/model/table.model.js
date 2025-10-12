@@ -1,7 +1,7 @@
 
 
 module.exports = (sequelize, DataTypes) => {
-    const Tables = sequelize.define("tables", {
+    const Table = sequelize.define("table", {
          table_no: {
             type: DataTypes.INTEGER,
             unique: true,
@@ -16,5 +16,5 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: "available"
          }
 });
-return Tables;
+return Table;
 }
