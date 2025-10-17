@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+    },{
+        timestamps: true
     });
     return Admin;
 }

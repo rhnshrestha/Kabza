@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {
-    freezeTableName: true //prevents pluralizing the table name
+    freezeTableName: true, //prevents pluralizing the table name
+    timestamps: true
   });
   return BookingStatus;
 };

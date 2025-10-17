@@ -1,4 +1,14 @@
 const {Booking, Table, BookingStatus} = require('../database/connect');
+
+const fetchBookings = async(req,res)=>{
+    const datas = await booking.findAll();
+
+    res.json({
+        message: "bookings fetched successfully",
+        datas
+    })
+}
+
 const createBooking = async (req, res)=>{
     try {
         const {customer_name, contact, booking_date, booking_time, people} = req.body;
@@ -29,3 +39,5 @@ const createBooking = async (req, res)=>{
         });
     }
 }
+
+module.exports = {createBooking, fetchBookings}

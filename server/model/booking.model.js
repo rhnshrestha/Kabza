@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     table_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
+      defaultValue: null,
       references: {
         model: "tables",
         key: "id"
@@ -32,14 +33,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     status_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: "booking_status",
         key: "id",
       },
       onUpdate: "CASCADE",
       onDelete: "CASCADE",
-    }
+    },
+  },{
+    timestamps: true
   });
   return Booking;
 };

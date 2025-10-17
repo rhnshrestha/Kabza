@@ -1,10 +1,11 @@
 require('./database/connect')
 const express = require("express");
 const app = express();
+const bookingRoute = require("./routes/bookingRoute")
 
-app.get('/', (req,res)=>{
-    res.send("server is running hai ta");
-})
+app.use(express.json());
+
+app.use("/api",bookingRoute);
 
 
 app.listen(8808,()=>{

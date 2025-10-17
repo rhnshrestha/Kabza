@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
          status: {
             type: DataTypes.ENUM("available","unavailable"),
             defaultValue: "available"
-         }
+         },
+      },{
+         timestamps: true
 });
 return Table;
 }
