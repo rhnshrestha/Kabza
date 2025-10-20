@@ -2,10 +2,12 @@ require('./database/connect')
 const express = require("express");
 const app = express();
 const bookingRoute = require("./routes/bookingRoute")
+const tableRoute = require("./routes/tableRoute")
 
 app.use(express.json());
 
 app.use("/api",bookingRoute);
+app.use("/api",tableRoute);
 
 
 app.listen(8808,()=>{

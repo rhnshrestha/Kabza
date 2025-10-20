@@ -3,7 +3,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Table = sequelize.define("table", {
          table_no: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             unique: true,
             allowNull: false
          },
