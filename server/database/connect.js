@@ -14,7 +14,7 @@ const BookingStatus = require('../model/booking_status.model')(sequelize, DataTy
 sequelize.authenticate()
   .then(() => {
     console.log("database pani connected vo");
-    return sequelize.sync({ alter: true });
+    return sequelize.sync({ alter: false });
   })
   .then(() => {
     console.log("migrate vayo");

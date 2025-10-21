@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
         model: "tables",
         key: "id"
       },
-      upUpdate: "CASCADE",
-      upDelete: "CASCADE",
+      onUpdate: "CASCADE",
+      onDelete: "SET NULL",
     },
     status_id: {
       type: DataTypes.INTEGER,
