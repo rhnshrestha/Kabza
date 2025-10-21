@@ -1,10 +1,11 @@
 const{Table} = require("../database/connect");
+
 const fetchTables = async(req, res)=>{
-    const datas = await Table.findAll();
+    const data = await Table.findAll();
 
     res.json({
         message: "Tables fetched successfully",
-        datas
+        data
     })
 }
 
@@ -27,4 +28,16 @@ const createTable = async(req, res)=>{
         table: newTable    })
 }
 
-module.exports = {fetchTables,createTable}
+const editTable = async(req, res)=>{
+    const id = req.params.id;
+    const {table_no, capacity, status} = req.body;
+    await Table.update({table_no, capacity, status}, { where : 
+        {
+         id : id
+        }});
+        
+        res.status(201).json({
+            message: "table updated successfully"
+        })
+}
+module.exports = {fetchTables,createTable, editTable}
