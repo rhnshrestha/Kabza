@@ -40,4 +40,15 @@ const editTable = async(req, res)=>{
             message: "table updated successfully"
         })
 }
-module.exports = {fetchTables,createTable, editTable}
+
+const deleteTable = async(req, res)=>{
+    const id = req.params.id;
+    await Table.destroy({where: {
+        id : id
+    }});
+    res.status(201).json({
+        message: "table deleted successfully"
+    })
+}
+
+module.exports = {fetchTables,createTable,editTable,deleteTable}
