@@ -1,6 +1,12 @@
 import { useState } from "react";
-
+import axios from "axios";
+import { bookingValidation } from "../validations/bookingValidation";
+const errorStyle = {
+  color: "red",
+  fontSize: "16px",
+};
 export default function BookingFormPage() {
+  const [error, setError] = useState({});
   const [formData, setFormData] = useState({
     customer_name: "",
     contact: "",
@@ -11,42 +17,78 @@ export default function BookingFormPage() {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const { name, value } = e.target;
 
-  const handleSubmit = (e) => {
+  setFormData({
+    ...formData,
+    [name]: name === "people" ? Number(value) : value,
+  });
+};
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData); // You can replace this with axios.post('/api/booking', formData)
-    alert("Booking submitted successfully!");
+    const validation = bookingValidation.safeParse(formData);
+
+    if (!validation.success) {
+      const fieldErrors = validation.error.flatten().fieldErrors;
+      setError(fieldErrors);
+      return;
+    }
+
+    setError({});
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8808/api/bookings",
+        formData
+      );
+
+      alert("Booking submitted successfully!");
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit booking");
+    }
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-r from-purple-500 to-indigo-600 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+    <div
+      className="min-h-screen bg-black flex items-center justify-center p-6"
+      style={{
+        backgroundImage: "url('/table.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl w-full max-w-3xl p-12">
+        <h1 className="text-4xl font-bold text-center text-gray-900 mb-3 tracking-tight">
           Book a Table 🍽️
         </h1>
+        <p className="text-center text-gray-500 mb-8 text-sm">
+          Fill the form to complete your reservation.
+        </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
-              Full Name
-            </label>
+        <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6">
+          {/* Full Name */}
+          <div className="flex flex-col col-span-2">
+            <label className="text-gray-800 font-medium mb-1">Full Name</label>
             <input
               type="text"
               name="customer_name"
               value={formData.customer_name}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
-              placeholder="Enter your name"
+              placeholder="Enter your full name"
+              className="border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 text-gray-800 
+            focus:ring-2 focus:ring-black transition-all outline-none"
             />
+            <span style={errorStyle}>{error.customer_name?.[0]}</span>
           </div>
 
           {/* Contact */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
+          <div className="flex flex-col">
+            <label className="text-gray-800 font-medium mb-1">
               Contact Number
             </label>
             <input
@@ -55,14 +97,16 @@ export default function BookingFormPage() {
               value={formData.contact}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
-              placeholder="e.g. 9800000000"
+              placeholder="98XXXXXXXX"
+              className="border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 text-gray-800 
+            focus:ring-2 focus:ring-black transition-all outline-none"
             />
+            <span style={errorStyle}>{error.contact?.[0]}</span>
           </div>
 
           {/* Email */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
+          <div className="flex flex-col">
+            <label className="text-gray-800 font-medium mb-1">
               Email Address
             </label>
             <input
@@ -71,14 +115,16 @@ export default function BookingFormPage() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
               placeholder="you@example.com"
+              className="border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 text-gray-800 
+            focus:ring-2 focus:ring-black transition-all outline-none"
             />
+            <span style={errorStyle}>{error.email?.[0]}</span>
           </div>
 
           {/* Date */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
+          <div className="flex flex-col">
+            <label className="text-gray-800 font-medium mb-1">
               Booking Date
             </label>
             <input
@@ -87,13 +133,15 @@ export default function BookingFormPage() {
               value={formData.booking_date}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              className="border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 text-gray-800 
+            focus:ring-2 focus:ring-black transition-all outline-none"
             />
+            <span style={errorStyle}>{error.booking_date?.[0]}</span>
           </div>
 
           {/* Time */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
+          <div className="flex flex-col">
+            <label className="text-gray-800 font-medium mb-1">
               Booking Time
             </label>
             <input
@@ -102,13 +150,15 @@ export default function BookingFormPage() {
               value={formData.booking_time}
               onChange={handleChange}
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
+              className="border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 text-gray-800 
+            focus:ring-2 focus:ring-black transition-all outline-none"
             />
+            <span style={errorStyle}>{error.booking_time?.[0]}</span>
           </div>
 
           {/* People */}
-          <div>
-            <label className="block text-gray-700 font-medium mb-1">
+          <div className="flex flex-col col-span-2">
+            <label className="text-gray-800 font-medium mb-1">
               Number of People
             </label>
             <input
@@ -118,22 +168,25 @@ export default function BookingFormPage() {
               onChange={handleChange}
               min="1"
               required
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-purple-400 outline-none"
               placeholder="e.g. 4"
+              className="border border-gray-300 rounded-xl px-4 py-3 bg-gray-50 text-gray-800 
+            focus:ring-2 focus:ring-black transition-all outline-none"
             />
+            <span style={errorStyle}>{error.people?.[0]}</span>
           </div>
 
-          {/* Submit Button */}
+          {/* Button */}
           <button
             type="submit"
-            className="w-full bg-linear-to-r from-purple-500 to-indigo-600 text-white py-2 rounded-lg font-semibold hover:opacity-90 transition"
+            className="col-span-2 bg-black text-white py-3 rounded-xl text-lg font-semibold 
+          shadow-md hover:bg-gray-900 active:scale-[0.97] transition-all"
           >
             Confirm Booking
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-4">
-          We’ll send you a confirmation email after submission.
+        <p className="text-center text-sm text-gray-600 mt-6 hover:text-black transition cursor-pointer">
+          View Status
         </p>
       </div>
     </div>
