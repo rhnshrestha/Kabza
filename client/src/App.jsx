@@ -6,6 +6,8 @@ import UserLogin from "./pages/auth/UserLogin"
 import UserRegister from "./pages/auth/UserRegister"
 import AdminLogin from "./pages/auth/AdminLogin"
 
+import AdminRoutes from "./routes/AdminRoutes"
+
 function App() {
 
   return (
@@ -16,6 +18,9 @@ function App() {
           <Route path='/user-login' element={<UserLogin/>}/>
           <Route path='/user-register' element={<UserRegister/>}/>
           <Route path='/admin-login' element={<AdminLogin/>}/>
+
+          <Route path="/admin/*" element={<AdminRoutes />} />
+          
       </Routes>
     </BrowserRouter>
   )

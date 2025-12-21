@@ -12,10 +12,17 @@ export default function AdminLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     const res = await adminLogin(formData);
-    setToken(res.data.token);
-    navigate("/");
-  };
+
+    if (res.data && res.data.token) {
+      setToken(res.data.token); 
+      navigate("/admin/dashboard");
+    } else {
+      alert("Login failed. Please check your credentials.");
+    }
+  
+};
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-6"

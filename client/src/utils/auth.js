@@ -3,9 +3,9 @@ export const setToken = (token) =>{
 };
 
 export const getToken = (token) =>{
-    localStorage.getItem("token", token);
+   return  localStorage.getItem("token");
 };
 
 export const logout = (token) =>{
-    localStorage.removeItem(token);
+    localStorage.removeItem("token");
 }
