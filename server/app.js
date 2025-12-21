@@ -1,15 +1,18 @@
 require('./database/connect')
 const express = require("express");
 const app = express();
+const cors = require('cors');
 const bookingRoute = require("./routes/bookingRoute")
 const tableRoute = require("./routes/tableRoute")
 const adminRoute = require("./routes/adminRoute")
+const userRoute = require("./routes/userRoute")
 
 app.use(express.json());
-
+app.use(cors());
 app.use("/api",bookingRoute);
 app.use("/api",tableRoute);
 app.use("/api",adminRoute);
+app.use("/api",userRoute);
 
 
 app.listen(8808,()=>{

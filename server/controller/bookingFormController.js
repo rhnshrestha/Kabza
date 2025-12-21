@@ -1,11 +1,11 @@
 const {Booking, Table, BookingStatus} = require('../database/connect');
 
 const fetchBookings = async(req,res)=>{
-    const datas = await Booking.findAll();
+    const data = await Booking.findAll();
 
     res.json({
         message: "bookings fetched successfully",
-        datas
+        data
     })
 }
 

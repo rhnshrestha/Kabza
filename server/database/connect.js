@@ -7,6 +7,7 @@ const sequelize = new Sequelize("table_bs", "root", "!rhn@sql25", {
 
 // import path for models
 const Admin = require('../model/admin.model')(sequelize, DataTypes);
+const User = require('../model/user.model')(sequelize, DataTypes);
 const Table = require('../model/table.model')(sequelize, DataTypes);
 const Booking = require('../model/booking.model')(sequelize,DataTypes);
 const BookingStatus = require('../model/booking_status.model')(sequelize, DataTypes);
@@ -23,4 +24,4 @@ sequelize.authenticate()
     console.log("error aayo" + err);
   });
 
-module.exports = { sequelize, Admin, Table, Booking, BookingStatus };
+module.exports = { sequelize, Admin, User, Table, Booking, BookingStatus };
