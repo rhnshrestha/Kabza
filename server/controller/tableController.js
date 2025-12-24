@@ -5,7 +5,7 @@ const fetchTables = async(req, res)=>{
 
     res.json({
         message: "Tables fetched successfully",
-        data
+        tables: data
     })
 }
 

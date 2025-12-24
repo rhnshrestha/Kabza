@@ -5,7 +5,7 @@ const fetchBookings = async(req,res)=>{
 
     res.json({
         message: "bookings fetched successfully",
-        data
+        bookings: data
     })
 }
 

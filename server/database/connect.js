@@ -12,6 +12,9 @@ const Table = require('../model/table.model')(sequelize, DataTypes);
 const Booking = require('../model/booking.model')(sequelize,DataTypes);
 const BookingStatus = require('../model/booking_status.model')(sequelize, DataTypes);
 
+Booking.belongsTo(Table, { foreignKey: 'id' });
+Booking.belongsTo(BookingStatus, { foreignKey: 'id' });
+
 sequelize.authenticate()
   .then(() => {
     console.log("database pani connected vo");
