@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { bookingValidation } from "../validations/bookingValidation";
+import { Link } from "react-router-dom";
 const errorStyle = {
   color: "red",
   fontSize: "16px",
@@ -17,14 +18,13 @@ export default function BookingFormPage() {
   });
 
   const handleChange = (e) => {
-  const { name, value } = e.target;
+    const { name, value } = e.target;
 
-  setFormData({
-    ...formData,
-    [name]: name === "people" ? Number(value) : value,
-  });
-};
-
+    setFormData({
+      ...formData,
+      [name]: name === "people" ? Number(value) : value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -185,9 +185,11 @@ export default function BookingFormPage() {
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-600 mt-6 hover:text-black transition cursor-pointer">
+        <Link
+          to="/booking-status"
+          className="text-center text-sm text-gray-600 mt-6 hover:text-black transition block">
           View Status
-        </p>
+        </Link>
       </div>
     </div>
   );

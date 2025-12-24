@@ -8,6 +8,8 @@ import AdminLogin from "./pages/auth/AdminLogin"
 
 import AdminRoutes from "./routes/AdminRoutes"
 
+import ViewBookingStatus from "./pages/ViewBookingStatus"
+
 function App() {
 
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path='/user-login' element={<UserLogin/>}/>
           <Route path='/user-register' element={<UserRegister/>}/>
           <Route path='/admin-login' element={<AdminLogin/>}/>
+
+          <Route path='/booking-status' element={<ViewBookingStatus/>}/>
 
           <Route path="/admin/*" element={<AdminRoutes />} />
           
