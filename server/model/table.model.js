@@ -1,22 +1,25 @@
-
-
 module.exports = (sequelize, DataTypes) => {
     const Table = sequelize.define("table", {
-         table_no: {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        table_no: {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false
-         },
-         capacity: {
+        },
+        capacity: {
             type: DataTypes.INTEGER,
             allowNull: false
-         },
-         status: {
-            type: DataTypes.ENUM("available","unavailable"),
+        },
+        status: {
+            type: DataTypes.ENUM("available", "unavailable"),
             defaultValue: "available"
-         },
-      },{
-         timestamps: true
-});
-return Table;
-}
+        },
+    }, {
+        timestamps: true
+    });
+    return Table;
+};

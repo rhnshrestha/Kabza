@@ -1,12 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
-  const BookingStatus = sequelize.define("booking_status", {
-    status_name: {
-      type: DataTypes.ENUM("pending", "confirmed", "cancelled"),
-      allowNull: false
-    }
-  }, {
-    freezeTableName: true, //prevents pluralizing the table name
-    timestamps: true
-  });
-  return BookingStatus;
+    const BookingStatus = sequelize.define("booking_status", {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        status_name: {
+            type: DataTypes.ENUM("pending", "confirmed", "cancelled"),
+            allowNull: false,
+            unique: true // Ensures no duplicate status types
+        }
+    }, {
+        freezeTableName: true, 
+        timestamps: true
+    });
+    return BookingStatus;
 };

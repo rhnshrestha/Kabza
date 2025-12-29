@@ -1,4 +1,4 @@
-const {Booking, Table, BookingStatus} = require('../database/connect');
+const {Booking} = require('../database/connect');
 
 const fetchBookings = async(req,res)=>{
     const data = await Booking.findAll();
@@ -25,7 +25,8 @@ const createBooking = async (req, res)=>{
             booking_time,
             people,
             table_id: null,
-            status_id: 1
+            user_id: req.user.id,
+            status_id: 3
         });
 
         res.status(201).json({

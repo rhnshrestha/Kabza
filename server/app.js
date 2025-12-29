@@ -1,4 +1,6 @@
-require('./database/connect')
+require('./database/connect');
+require('./algorithm/notificationService');
+
 const express = require("express");
 const app = express();
 const cors = require('cors');

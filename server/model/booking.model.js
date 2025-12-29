@@ -1,5 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Booking = sequelize.define("booking", {
+    // Keep existing fields
     customer_name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -19,6 +20,17 @@ module.exports = (sequelize, DataTypes) => {
     people: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    // ADD THIS NEW FIELD TO LINK TO THE USER TABLE
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false, // Set to false so every booking belongs to an account
+      references: {
+        model: "users", // Must match your 'users' table name
+        key: "id"
+      },
+      onUpdate: "CASCADE",
+      onDelete: "CASCADE",
     },
     table_id: {
       type: DataTypes.INTEGER,
