@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { userRegister } from "../../services/authService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function UserRegister() {
   const navigate = useNavigate();
@@ -20,43 +20,74 @@ export default function UserRegister() {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6"
-      style={{
-        backgroundImage: "url('/table.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}>
-      <div className="bg-white p-10 rounded-2xl w-full max-w-md shadow-xl">
-        <h2 className="text-3xl font-bold text-center mb-6">Create Account</h2>
+    <div 
+      className="min-h-screen w-full flex items-center justify-center p-6 bg-cover bg-center relative"
+      style={{ backgroundImage: "url('/table.jpg')" }}
+    >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/50"></div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="username"
-            placeholder="Full Name"
-            className="w-full border rounded-xl px-4 py-3"
-            onChange={handleChange}
-          />
+      <div className="relative z-10 w-full max-w-md">
+        <div className="bg-black/40 backdrop-blur-xl p-10 rounded-3xl shadow-2xl border border-white/10 text-white">
+          
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold tracking-tight mb-2">Join the Club</h2>
+            <p className="text-gray-400 text-sm">Create an account to start booking</p>
+          </div>
 
-          <input
-            name="email"
-            placeholder="Email"
-            className="w-full border rounded-xl px-4 py-3"
-            onChange={handleChange}
-          />
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <input
+                type="text"
+                name="username"
+                placeholder="Full Name"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all"
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="w-full border rounded-xl px-4 py-3"
-            onChange={handleChange}
-          />
+            <div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all"
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <button className="w-full bg-black text-white py-3 rounded-xl">
-            Register
-          </button>
-          <p>Already have account ? <a className="text-blue-800" href="/user-login">Login</a></p> 
-        </form>
+            <div>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all"
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <button className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-4 rounded-2xl shadow-lg transform active:scale-[0.98] transition-all duration-200 mt-4">
+              Create Account
+            </button>
+
+            <p className="text-center text-gray-400 mt-8 text-sm">
+              Already have an account?{" "}
+              <Link to="/user-login" className="text-orange-500 font-medium hover:underline decoration-2 underline-offset-4">
+                Login
+              </Link>
+            </p> 
+          </form>
+        </div>
+
+        {/* Back to Home Link */}
+        <div className="text-center mt-6">
+           <Link to="/" className="text-gray-400 text-xs uppercase tracking-widest hover:text-white transition">
+             ← Back to Home
+           </Link>
+        </div>
       </div>
     </div>
   );
