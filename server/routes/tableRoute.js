@@ -1,6 +1,12 @@
-const {fetchTables, createTable, editTable, deleteTable} = require("../controller/tableController");
 const router = require("express").Router();
-router.route("/table").get(fetchTables).post(createTable);
-router.route("/table/:id").patch(editTable).delete(deleteTable);
+const TableController = require("../controller/tableController");
+router
+  .route("/table")
+  .get(TableController.fetchTables)
+  .post(TableController.createTable);
+router
+  .route("/table/:id")
+  .patch(TableController.editTable)
+  .delete(TableController.deleteTable);
 
 module.exports = router;

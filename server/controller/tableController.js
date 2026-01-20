@@ -1,6 +1,7 @@
 const{Table} = require("../database/connect");
 
-const fetchTables = async(req, res)=>{
+class TableController{
+static async fetchTables(req, res){
     const data = await Table.findAll();
 
     res.json({
@@ -9,7 +10,7 @@ const fetchTables = async(req, res)=>{
     })
 }
 
-const createTable = async(req, res)=>{
+static async createTable(req, res){
     const{table_no, capacity, status} = req.body;
     if(!table_no || !capacity || !status){
         return res.status(400).json({
@@ -28,7 +29,7 @@ const createTable = async(req, res)=>{
         table: newTable    })
 }
 
-const editTable = async(req, res)=>{
+static async editTable(req, res){
     const id = req.params.id;
     const {table_no, capacity, status} = req.body;
     await Table.update({table_no, capacity, status}, { where : 
@@ -41,7 +42,7 @@ const editTable = async(req, res)=>{
         })
 }
 
-const deleteTable = async(req, res)=>{
+static async deleteTable(req, res){
     const id = req.params.id;
     await Table.destroy({where: {
         id : id
@@ -50,5 +51,5 @@ const deleteTable = async(req, res)=>{
         message: "table deleted successfully"
     })
 }
-
-module.exports = {fetchTables,createTable,editTable,deleteTable}
+}
+module.exports = TableController;

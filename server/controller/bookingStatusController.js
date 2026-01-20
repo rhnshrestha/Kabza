@@ -1,37 +1,48 @@
 const { Booking, Table, BookingStatus } = require("../database/connect");
 
-const getBookingStatus = async (req, res) => {
+class StatusController {
+  /**
+   * Fetch booking status based on customer contact number
+   */
+  static async getBookingStatus(req, res) {
     try {
-        // Change to req.body for POST or req.query for GET
-        const { contact } = req.body; 
+      const { contact } = req.body;
 
-        if (!contact) {
-            return res.status(400).json({ message: "contact no required" });
-        }
+      if (!contact) {
+        return res.status(400).json({ message: "Contact number is required" });
+      }
 
-        const bookings = await Booking.findAll({
-            where: { contact },
-            attributes: ["customer_name", "booking_date", "booking_time", "people"],
-            include: [
-                { model: Table, attributes: ["table_no"] },
-                { model: BookingStatus, attributes: ["status_name"] }
-            ],
-        });
+      const bookings = await Booking.findAll({
+        where: { contact },
+        attributes: ["customer_name", "booking_date", "booking_time", "people"],
+        include: [
+          { 
+            model: Table, 
+            attributes: ["table_no"] 
+          },
+          { 
+            model: BookingStatus, 
+            attributes: ["status_name"] 
+          }
+        ],
+      });
 
-        if (bookings.length === 0) {
-            return res.status(404).json({ message: "no booking found" });
-        }
+      if (bookings.length === 0) {
+        return res.status(404).json({ message: "No booking found for this contact" });
+      }
 
-        // Send the data back!
-        return res.json({
-            message: "booking status fetched",
-            data: bookings 
-        });
-
+      return res.status(200).json({
+        message: "Booking status fetched successfully",
+        data: bookings,
+      });
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "error fetching booking status" });
+      console.error("Status Fetch Error:", err);
+      return res.status(500).json({ 
+        message: "Error fetching booking status",
+        error: err.message 
+      });
     }
+  }
 }
 
-module.exports = { getBookingStatus };
+module.exports = StatusController;
