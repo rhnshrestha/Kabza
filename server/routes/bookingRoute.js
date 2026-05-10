@@ -24,4 +24,7 @@ router
 // Status Routes
 router.route("/bookings/status").post(StatusController.getBookingStatus);
 
+router.patch("/bookings/:id/status", verifyToken, BookingController.updateStatus);
+
+
 module.exports = router;

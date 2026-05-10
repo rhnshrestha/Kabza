@@ -13,11 +13,11 @@ export const bookingValidation = z.object({
     .trim()
     .regex(/^98\d{8}$/, "Contact must be a valid 10-digit Nepali number"),
 
-  email: z
-    .string()
-    .trim()
-    .email("Invalid email address")
-    .transform((val) => val.toLowerCase()),
+  // email: z
+  //   .string()
+  //   .trim()
+  //   .email("Invalid email address")
+  //   .transform((val) => val.toLowerCase()),
 
   booking_date: z
     .string()

@@ -3,9 +3,7 @@ const jwt = require("jsonwebtoken");
 const { Admin } = require("../database/connect");
 
 class AdminController {
-  /**
-   * Register a new Admin
-   */
+
   static async registerAdmin(req, res) {
     try {
       const { username, email, password } = req.body;
@@ -38,9 +36,7 @@ class AdminController {
     }
   }
 
-  /**
-   * Login Admin and return JWT
-   */
+
   static async loginAdmin(req, res) {
     try {
       const { email, password } = req.body;
@@ -73,9 +69,7 @@ class AdminController {
     }
   }
 
-  /**
-   * Update Admin details
-   */
+ 
   static async editAdmin(req, res) {
     try {
       const { id } = req.params;
@@ -98,15 +92,47 @@ class AdminController {
     }
   }
 
-  /**
-   * Fetch all Admins
-   */
+
   static async getAdmin(req, res) {
     try {
       const data = await Admin.findAll();
       return res.status(200).json({ message: "list of admin", data });
     } catch (error) {
       return res.status(400).json({ message: "Error fetching admin" });
+    }
+  }
+
+  static async changePassword(req, res) {
+    try {
+      const adminId = req.user.id; 
+      const { oldPassword, newPassword } = req.body;
+  
+      if (!oldPassword || !newPassword) {
+        return res.status(400).json({ message: "Both old and new passwords are required" });
+      }
+  
+      const admin = await Admin.findByPk(adminId);
+      if (!admin) {
+        return res.status(404).json({ message: "Admin not found" });
+      }
+  
+      const isMatch = await bcrypt.compare(oldPassword, admin.password);
+      if (!isMatch) {
+        return res.status(401).json({ message: "Current password is incorrect" });
+      }
+  
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+  
+      await Admin.update(
+        { password: hashedPassword },
+        { where: { id: adminId } }
+      );
+  
+      return res.status(200).json({ message: "Password updated successfully" });
+  
+    } catch (error) {
+      console.error("Change Password Error:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
   }
 }

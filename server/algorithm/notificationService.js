@@ -32,7 +32,6 @@ cron.schedule('0 9 * * *', async () => {
             const currentEventId = event.id || event.event_id;
 
             for (const user of pastCustomers) {
-                // Check if already notified
                 const alreadyNotified = await Notification.findOne({
                     where: {
                         user_id: user.id,
@@ -41,14 +40,12 @@ cron.schedule('0 9 * * *', async () => {
                 });
 
                 if (alreadyNotified) {
-                    // This log for demo
                     console.log(`User ${user.email} already notified for ${event.event_name}. Skipping...`);
                     continue;
                 }
                 
                 const alertMessage = `Hi ${user.username}! ${event.event_name} is coming up on ${event.event_date}. Book your table now!`;
 
-                // 1. Create Notification Record
                 await Notification.create({
                     user_id: user.id,
                     event_id: currentEventId,
@@ -56,7 +53,6 @@ cron.schedule('0 9 * * *', async () => {
                     sent_at: new Date()
                 });
 
-                // 2. Prepare Email
                 const mailOptions = {
                     from: '"The Tasty Chicken" <rockyrestaurant25@gmail.com>',
                     to: user.email,
@@ -64,12 +60,11 @@ cron.schedule('0 9 * * *', async () => {
                     html: `<p>${alertMessage}</p>`
                 };
 
-                // 3. Send Email
                 await transporter.sendMail(mailOptions);
-                console.log(`✅ SUCCESS: Email sent to ${user.email} for ${event.event_name}`);
+                console.log(`SUCCESS: Email sent to ${user.email} for ${event.event_name}`);
             }
         }
     } catch (error) {
-        console.error("❌ Algorithm Error:", error);
+        console.error("Algorithm Error:", error);
     }
 });

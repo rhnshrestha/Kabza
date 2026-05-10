@@ -30,6 +30,9 @@ export default function AdminNavbar() {
         <NavLink to="/admin/events" className={linkStyle}>
           Events
         </NavLink>
+        <NavLink to="/admin/change-password" className={linkStyle}>
+          Change Password
+        </NavLink>
         <button
           onClick={handleLogout}
           className="block w-full text-left px-4 py-3 rounded-lg bg-red-600 mt-6 hover:bg-red-700 transition cursor-pointer"

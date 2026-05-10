@@ -5,16 +5,12 @@ import { getToken } from "../utils/auth";
 import { Link } from "react-router-dom";
 
 
-const errorStyle = {
-  color: "red",
-  fontSize: "16px",
-};
+
 export default function BookingFormPage() {
   const [error, setError] = useState({});
   const [formData, setFormData] = useState({
     customer_name: "",
     contact: "",
-    email: "",
     booking_date: "",
     booking_time: "",
     people: "",
@@ -113,20 +109,6 @@ export default function BookingFormPage() {
               {error.contact && <span className="text-red-400 text-xs mt-1 ml-1">{error.contact[0]}</span>}
             </div>
 
-            {/* Email */}
-            <div className="flex flex-col">
-              <label className="text-gray-300 text-sm font-medium mb-2 ml-1">Email Address</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="you@example.com"
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-3.5 text-white placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all"
-              />
-              {error.email && <span className="text-red-400 text-xs mt-1 ml-1">{error.email[0]}</span>}
-            </div>
 
             {/* Date */}
             <div className="flex flex-col">

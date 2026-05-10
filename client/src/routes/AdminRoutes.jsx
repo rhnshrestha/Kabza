@@ -4,6 +4,7 @@ import AdminDashboard from "../admin/AdminDashboard";
 import BookingsPage from "../admin/BookingsPage";
 import TablesPage from "../admin/TablesPage"
 import EventsPage from "../admin/EventsPage"
+import ChangePassword from "../admin/ChangePassword"
 
 
 
@@ -18,6 +19,7 @@ export default function AdminRoutes() {
         <Route path="bookings" element={<BookingsPage />} />
         <Route path="tables" element={<TablesPage />} />
         <Route path="events" element={<EventsPage />} />
+        <Route path="change-password" element={<ChangePassword />} />
       </Route>
     </Routes>
   );
